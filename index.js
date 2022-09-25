@@ -5,10 +5,10 @@ const podcastRouter = require("./routers/podcastRouter");
 const utilRouter = require("./routers/util");
 const cors = require("cors");
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // to allow your frontend
-app.use(cors({ origin: ["http://localhost:3000"] }));
+app.use(cors({ origin: ["http://localhost:3000", ""] }));
 
 // for reading data from client
 app.use(express.json());
