@@ -8,7 +8,7 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 
 // to allow your frontend
-app.use(cors({ origin: ["http://localhost:3000", ""] }));
+app.use(cors({ origin: ["http://localhost:3000", "https://podcast-frontend.herokuapp.com"] }));
 
 // for reading data from client
 app.use(express.json());
