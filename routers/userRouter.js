@@ -1,17 +1,34 @@
 const router = require("express").Router();
 const Model = require("../models/userModel");
 
-router.post("/add", (req, res) => {
-  console.log(req.body);
+// router.post("/add", (req, res) => {
+//   console.log(req.body);
 
-  new Model(req.body)
-    .save()
-    .then((data) => {
-      res.status(200).json({ message: "success" });
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+//   new Model(req.body)
+//     .save()
+//     .then((data) => {
+//       res.status(200).json({ message: "success" });
+//     })
+//     .catch((err) => {
+//       res.status(500).json(err);
+//     });
+// });
+
+router.post("/add", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const userExist = await Model.findOne({ email: email });
+    if (userExist) {
+      return res.status(409).json({ error: "Email already exist !" });
+    } else {
+      const user = new Model(req.body);
+      await user.save();
+      res.status(201).json({ message: "User registered successfully !!" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 router.get("/getall", (req, res) => {
